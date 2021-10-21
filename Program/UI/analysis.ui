@@ -10,8 +10,20 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>灰色关联</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../images/data-view.png</normaloff>../images/data-view.png</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

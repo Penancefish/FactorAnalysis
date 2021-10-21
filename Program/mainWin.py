@@ -1,5 +1,6 @@
 import pandas as pd
-from PyQt5.QtWidgets import QApplication, QFileDialog
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMdiSubWindow
 from PyQt5 import uic
 from Lib.share import SI
 from Lib.pandasMod import PandasModel
@@ -12,7 +13,7 @@ class UIAnalysisWindow:
 
     def __init__(self):
         SI.analysis_table = pd.DataFrame()
-        self.ui = uic.loadUi("analysis.ui")
+        self.ui = uic.loadUi("UI/analysis.ui")
         self.ui.pushButton.clicked.connect(self.certain)
         self.ui.btn_export.clicked.connect(self.export)
 
@@ -36,7 +37,7 @@ class UIAnalysisWindow:
 class UIPearsonWindow:
 
     def __init__(self):
-        self.ui = uic.loadUi("pearson.ui")
+        self.ui = uic.loadUi("UI/pearson.ui")
         color = ["Accent", "Accent_r", "Blues", "Blues_r",
                  "BrBG", "BrBG_r", "BuGn", "BuGn_r", "BuPu",
                  "BuPu_r", "CMRmap", "CMRmap_r", "Dark2", "Dark2_r",
@@ -72,7 +73,7 @@ class UIRegressionWindow:
     def __init__(self):
         self.table1 = None
         SI.regression_table = pd.DataFrame()
-        self.ui = uic.loadUi("regression.ui")
+        self.ui = uic.loadUi("UI/regression.ui")
         self.ui.btn_regression.clicked.connect(self.regression_analysis)
         self.ui.btn_export_1.clicked.connect(self.export_1)
         self.ui.btn_export_2.clicked.connect(self.export_2)
@@ -109,7 +110,7 @@ class UIMainWindow:
         self._window_ana = None
         self._window_pear = None
         self._window_reg = None
-        self.ui = uic.loadUi("main.ui")
+        self.ui = uic.loadUi("UI/main.ui")
         self.ui.actionImport.triggered.connect(self.open_file)
         self.ui.actionAnalysis.triggered.connect(self.open_analysis_window)
         self.ui.actionPearson.triggered.connect(self.open_pearson_window)
@@ -121,19 +122,65 @@ class UIMainWindow:
             return
         SI.baseTable = pd.read_excel(openfile_name)
         model = PandasModel(SI.baseTable)
-        self.ui.tableView.setModel(model)
+        # 先创建子窗口对象
+        subWindow = QMdiSubWindow()
+        # subWindow.setWindowTitle("白月黑羽子窗口1")
+        # 从ui定义文件中加载子窗口界面
+        form = uic.loadUi('UI/basetable.ui')
+        form.tableView.setModel(model)
+        subWindow.setWidget(form)
+        subWindow.setAttribute(Qt.WA_DeleteOnClose)
+
+        # 把子窗口加入到 MDI 区域
+        self.ui.mdiArea.addSubWindow(subWindow)
+        # 显示子窗口
+        subWindow.show()
+        # 子窗口提到最上层，并且最大化
+        subWindow.setWindowState(Qt.WindowActive | Qt.WindowMaximized)
 
     def open_analysis_window(self):
         self._window_ana = UIAnalysisWindow()
-        self._window_ana.ui.show()
+        # 先创建子窗口对象
+        subWindow = QMdiSubWindow()
+        # 从ui定义文件中加载子窗口界面
+        subWindow.setWidget(self._window_ana.ui)
+        subWindow.setAttribute(Qt.WA_DeleteOnClose)
+
+        # 把子窗口加入到 MDI 区域
+        self.ui.mdiArea.addSubWindow(subWindow)
+        # 显示子窗口
+        subWindow.show()
+        # 子窗口提到最上层，并且最大化
+        subWindow.setWindowState(Qt.WindowActive | Qt.WindowMaximized)
 
     def open_pearson_window(self):
         self._window_pear = UIPearsonWindow()
-        self._window_pear.ui.show()
+        # 先创建子窗口对象
+        subWindow = QMdiSubWindow()
+        # 从ui定义文件中加载子窗口界面
+        subWindow.setWidget(self._window_pear.ui)
+        subWindow.setAttribute(Qt.WA_DeleteOnClose)
+
+        # 把子窗口加入到 MDI 区域
+        self.ui.mdiArea.addSubWindow(subWindow)
+        # 显示子窗口
+        subWindow.show()
+        subWindow.setWindowState(Qt.WindowActive)
 
     def open_regression_window(self):
         self._window_reg = UIRegressionWindow()
-        self._window_reg.ui.show()
+        # 先创建子窗口对象
+        subWindow = QMdiSubWindow()
+        # 从ui定义文件中加载子窗口界面
+        subWindow.setWidget(self._window_reg.ui)
+        subWindow.setAttribute(Qt.WA_DeleteOnClose)
+
+        # 把子窗口加入到 MDI 区域
+        self.ui.mdiArea.addSubWindow(subWindow)
+        # 显示子窗口
+        subWindow.show()
+        # 子窗口提到最上层，并且最大化
+        subWindow.setWindowState(Qt.WindowActive | Qt.WindowMaximized)
 
 
 app = QApplication([])
