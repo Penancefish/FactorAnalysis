@@ -13,14 +13,10 @@
   <property name="windowTitle">
    <string>因素分析</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../images/datav-data.png</normaloff>../images/datav-data.png</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QMdiArea" name="mdiArea"/>
+     <widget class="QTableView" name="tableView"/>
     </item>
    </layout>
   </widget>

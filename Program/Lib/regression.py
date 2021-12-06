@@ -2,7 +2,8 @@ from itertools import combinations
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
 import pandas as pd
-from Lib.analysis import GrayCorrelation
+from LearnPyQt.Lib.analysis import GrayCorrelation
+import numpy as np
 
 
 class Regression:

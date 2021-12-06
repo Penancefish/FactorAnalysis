@@ -31,10 +31,6 @@
   <property name="windowTitle">
    <string>皮尔逊</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../images/data-view.png</normaloff>../images/data-view.png</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
