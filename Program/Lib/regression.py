@@ -2,8 +2,7 @@ from itertools import combinations
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
 import pandas as pd
-from LearnPyQt.Lib.analysis import GrayCorrelation
-import numpy as np
+from Lib.analysis import GrayCorrelation
 
 
 class Regression:
@@ -78,15 +77,3 @@ class Regression:
         max_value = self._table['R2'].max()
         max_result = self._table.loc[self._table['R2'] == max_value]
         return max_result
-
-
-# df = pd.read_excel(r'D:\Program Data\test.xlsx')
-# result = Regression().main_program(df, 5)
-# max_result = result['R2'].max()
-# zuhe = result.loc[result['R2'] == max_result]
-# print(zuhe['R2'].values)
-# print(zuhe['组合方式'].values)
-# print(zuhe['有效数'].values)
-# print(zuhe['a'].values, zuhe['b'].values)
-# print(zuhe['w'].values)
-# result.to_excel(r'D:\Program Data\result.xlsx')
